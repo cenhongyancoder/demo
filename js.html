@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    var str = 'helloWorld';
+    var i = str.toLowerCase();
+    var v = i.indexOf('w');
+    var s = i.substring(0,v);
+    var a = i.substring(v);
+    var t = s+'_'+a
+    console.log(t)
+
+    var d = i.split('');
+    var rr = [];
+    var bb = [];
+    d.forEach(function (a,b) {
+        if(b>=v){
+            rr.push(a);
+        }else{
+            bb.push(a)
+        }
+    });
+    s = bb.join('')+'_'+rr.join('');
+    console.log(s)
+
+    var q = i.slice(0,v);
+    var r = i.slice(v);
+    var ss = q+'_'+r;
+    console.log(q)
+
+
+    var e = i.split('w');
+    var stt = e.join('_w');
+    console.log(e.join('_w'));
+</script>
+</html>
