@@ -5,18 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-
+  <div>Hello world Good B4444444355454</div>
 </body>
 <script>
+
     var str = 'helloWorld';
     var i = str.toLowerCase();
-    var v = i.indexOf('w');
-    var s = i.substring(0,v);
+       var v = i.indexOf('w');
+    /* var s = i.substring(0,v);
     var a = i.substring(v);
     var t = s+'_'+a
-    console.log(t)
+ // 0.636ms
+     */
 
-    var d = i.split('');
+/*  var d = i.split('');
     var rr = [];
     var bb = [];
     d.forEach(function (a,b) {
@@ -26,17 +28,29 @@
             bb.push(a)
         }
     });
-    s = bb.join('')+'_'+rr.join('');
-    console.log(s)
-
+    s = bb.join('')+'_'+rr.join(''); //3.08
+    console.log(s)*/
+    console.time("Factorial test");
     var q = i.slice(0,v);
     var r = i.slice(v);
     var ss = q+'_'+r;
-    console.log(q)
-
-
     var e = i.split('w');
-    var stt = e.join('_w');
-    console.log(e.join('_w'));
+    var stt = e.join('_w');//1.21
+    console.timeEnd("Factorial test");
+
+
+    //回调函数
+    var doit = function (callback) {//callback：function的名字
+        var a = 1,b=2,c=3;
+        var t = callback(a,b,c);
+        return t+10;
+    }
+    var d = doit(function (x,y,z) {
+        return (x+y+z);
+    })
+    console.log(d);
+
+
+
 </script>
 </html>

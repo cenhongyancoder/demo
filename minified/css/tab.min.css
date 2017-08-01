@@ -1,0 +1,13 @@
+ul li {
+  float: left;
+  list-style: none;
+}
+ul li.active a {
+  padding: 2px 20px;
+  background: red;
+  line-height: 4;
+}
+ul li a {
+  line-height: 4;
+  padding: 2px 20px;
+}

@@ -143,39 +143,105 @@ ReactDOM.render(
 */
 
 /*Ajax*/
-var UserGist = React.createClass({
-    displayName: 'UserGist',
-
-    getInitialState: function getInitialState() {
+/*var UserGist = React.createClass({
+    getInitialState:function () {
         return {
-            username: '',
-            lastGistUrl: ''
+            username:'',
+            lastGistUrl:''
         };
     },
-    componentDidMount: function componentDidMount() {
-        $.get(this.props.source, function (result) {
+    componentDidMount:function () {
+        $.get(this.props.source,function (result) {
             var lastGist = result[0];
-            if (this.isMounted()) {
+            if(this.isMounted()){
                 this.setState({
-                    username: lastGist.owner.login,
-                    lastGistUrl: lastGist.html_url
+                    username:lastGist.owner.login,
+                    lastGistUrl:lastGist.html_url
 
                 });
             }
         }.bind(this));
     },
-    render: function render() {
-        return React.createElement(
-            'div',
-            null,
-            this.state.username,
-            '\'s last gist',
-            React.createElement(
-                'a',
-                { href: this.state.lastGistUrl },
-                'here'
-            )
-        );
+    render:function () {
+        return(
+            <div>
+            {this.state.username}'s last gist
+            <a href={this.state.lastGistUrl}>here</a>
+             </div>
+        )
     }
 });
-ReactDOM.render(React.createElement(UserGist, { source: 'https://api.github.com/users/octocat/gists' }), document.body);
+ReactDOM.render(
+     <UserGist source="https://api.github.com/users/octocat/gists"/>,
+     document.body
+);*/
+/*对象当属性*/
+
+var RepoList = React.createClass({
+    displayName: 'RepoList',
+
+    getInitialState: function getInitialState() {
+        return { loading: true, error: null, data: null };
+    },
+    componentDidMount: function componentDidMount() {
+        var _this = this;
+
+        this.props.promise.then(function (value) {
+            return _this.setState({ loading: false, data: value });
+        }, function (error) {
+            return _this.setState({ loading: false, error: error });
+        });
+    },
+
+    render: function render() {
+        if (this.state.loading) {
+            return React.createElement(
+                'span',
+                null,
+                'Loading...'
+            );
+        } else if (this.state.error !== null) {
+            return React.createElement(
+                'span',
+                null,
+                'Error:',
+                this.state.error.message
+            );
+        } else {
+            var repos = this.state.data.items;
+            var repoList = repos.map(function (repo) {
+                return React.createElement(
+                    'li',
+                    null,
+                    React.createElement(
+                        'a',
+                        { href: repo.html_url },
+                        repo.name
+                    ),
+                    '(',
+                    repo.stargazers_count,
+                    'stars)',
+                    React.createElement('br', null),
+                    repo.description
+                );
+            });
+
+            return React.createElement(
+                'main',
+                null,
+                React.createElement(
+                    'h1',
+                    null,
+                    'MMost Popular JavaScript Projects in Github'
+                ),
+                React.createElement(
+                    'ol',
+                    null,
+                    repoList
+                )
+            );
+        }
+    }
+});
+ReactDOM.render(React.createElement(RepoList, {
+    promise: $.getJSON('https://api.github.com/search/repositories?q=javascript&sort=stars') }), document.body);
